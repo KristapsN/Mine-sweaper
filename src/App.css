@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+}
+.game--grid{
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 2px solid grey;
+    margin: 50px auto;
+}
