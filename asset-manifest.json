@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Mine-sweaper/static/css/main.9e14236d.chunk.css",
+    "main.js": "/Mine-sweaper/static/js/main.b08acb15.chunk.js",
+    "main.js.map": "/Mine-sweaper/static/js/main.b08acb15.chunk.js.map",
+    "runtime-main.js": "/Mine-sweaper/static/js/runtime-main.0e6a0cd5.js",
+    "runtime-main.js.map": "/Mine-sweaper/static/js/runtime-main.0e6a0cd5.js.map",
+    "static/css/2.e985627f.chunk.css": "/Mine-sweaper/static/css/2.e985627f.chunk.css",
+    "static/js/2.fbdffd9e.chunk.js": "/Mine-sweaper/static/js/2.fbdffd9e.chunk.js",
+    "static/js/2.fbdffd9e.chunk.js.map": "/Mine-sweaper/static/js/2.fbdffd9e.chunk.js.map",
+    "static/js/3.22a4faf2.chunk.js": "/Mine-sweaper/static/js/3.22a4faf2.chunk.js",
+    "static/js/3.22a4faf2.chunk.js.map": "/Mine-sweaper/static/js/3.22a4faf2.chunk.js.map",
+    "index.html": "/Mine-sweaper/index.html",
+    "static/css/2.e985627f.chunk.css.map": "/Mine-sweaper/static/css/2.e985627f.chunk.css.map",
+    "static/css/main.9e14236d.chunk.css.map": "/Mine-sweaper/static/css/main.9e14236d.chunk.css.map",
+    "static/js/2.fbdffd9e.chunk.js.LICENSE.txt": "/Mine-sweaper/static/js/2.fbdffd9e.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.0e6a0cd5.js",
+    "static/css/2.e985627f.chunk.css",
+    "static/js/2.fbdffd9e.chunk.js",
+    "static/css/main.9e14236d.chunk.css",
+    "static/js/main.b08acb15.chunk.js"
+  ]
+}
