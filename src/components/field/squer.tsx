@@ -10,9 +10,10 @@ type Props = {
   bomb: boolean;
   openHandler: (x: number, y: number) => void;
   bombNumber: number;
+  numberColor: string;
 };
 
-export const Squer = ({ x, y, id, openHandler, open, bomb, bombNumber }: Props) => {
+export const Squer = ({ x, y, id, openHandler, open, bomb, bombNumber, numberColor }: Props) => {
 
   return (
     <>
@@ -27,8 +28,9 @@ export const Squer = ({ x, y, id, openHandler, open, bomb, bombNumber }: Props) 
         <button
           type='button'
           className={`${style.squer} ${style.squerOpen}`}
-          style={{ top: `${y}%`, left: `${x}%` }}
+          style={{ top: `${y}%`, left: `${x}%`, color: `${numberColor}` }}
           onClick={() => openHandler(x, y)}
+          
         >{bombNumber}
         </button>}
       {bomb && open &&

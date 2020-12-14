@@ -5,7 +5,7 @@ import 'flexboxgrid';
 import { v4 as uuidv4 } from 'uuid';
 import { Squer } from './components/field/squer';
 
-const example = { id: '1', x: 0, y: 1, open: false, firstCircel: false, secondCircle: false, bomb: false, bombNumber: 0 };
+const example = { id: '1', x: 0, y: 1, open: false, firstCircel: false, secondCircle: false, bomb: false, bombNumber: 0, color: 'red' };
 const bombPlaces: Array<Array<number>> = [[]];
 
 const App = () => {
@@ -56,7 +56,7 @@ const App = () => {
     });
   };
   const callCheckNext = () => {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       checkNextOpenZeroStep();
     }
   };
@@ -96,7 +96,7 @@ const App = () => {
         const setId = uuidv4();
         generate = {
           id: setId, x: i * 10, y: j * 10, open: false, bomb: false,
-          firstCircel: false, secondCircle: false, bombNumber: 0
+          firstCircel: false, secondCircle: false, bombNumber: 0, color: 'red'
         };
         newFieldSquers.push(generate);
         setFieldSquers(newFieldSquers);
@@ -104,26 +104,37 @@ const App = () => {
     }
   };
 
+  const bombCounter = () => {
+    const bombLength = fieldSquers.filter(item => item.bomb === true);
+    setBombCount(bombLength.length);
+    if (bombLength.length < 10) {
+      putBombs();
+    }
+  };
+
   const putBombs = () => {
     const bombField = [...fieldSquers];
-    bombField.map((item) => {
-      for (let i = 0; i < 11; i++) {
-        const num = Math.floor(Math.random() * 11);
-        const num2 = Math.floor(Math.random() * 11);
+    for (let i = 0; i < 1; i++) {
+      const num = Math.floor(Math.random() * 10);
+      const num2 = Math.floor(Math.random() * 10);
+
+
+      bombField.map((item) => {
+
+        console.log(num, num2);
         if (item.x / 10 === num && item.y / 10 === num2) {
           bombPlaces.push([item.x, item.y]);
           item.bomb = true;
         }
-      }
-    });
+
+      });
+    }
     setFieldSquers(bombField);
+
     bombCounter();
   };
 
-  const bombCounter = () => {
-    const bombLength = fieldSquers.filter(item => item.bomb === true);
-    setBombCount(bombLength.length);
-  };
+
 
   const putBombNumbers = () => {
     const bombNumberField = [...fieldSquers];
@@ -140,6 +151,7 @@ const App = () => {
       }
     });
     setFieldSquers(bombNumberField);
+    console.log(bombNumberField);
   };
 
   useEffect(() => {
@@ -149,7 +161,47 @@ const App = () => {
   const start = () => {
     putBombs();
     putBombNumbers();
+    putNumberColor();
+
   };
+
+
+  const putNumberColor = () => {
+    const allNumberColors = [...fieldSquers]; 
+    fieldSquers.map((item) => {
+      switch (item.bombNumber) {
+        case 0:
+          item.color = 'rgb(201, 201, 201)';
+          break;
+        case 1:
+          item.color = 'rgb(0, 4, 212)';
+          break;
+        case 2:
+          item.color = 'rgb(0, 177, 59)';
+          break;
+        case 3:
+          item.color = 'rgb(177, 130, 0)';
+          break;
+        case 4:
+          item.color = 'rgb(0, 142, 177)';
+          break;
+        case 5:
+          item.color = 'rgb(121, 0, 177)';
+          break;
+        case 6:
+          item.color = 'rgb(177, 0, 147)';
+          break;
+        case 7:
+          item.color = 'rgb(177, 0, 0)';
+          break;
+        case 8:
+          item.color = 'rgb(0, 0, 0)';
+          break;
+      }
+      setFieldSquers(allNumberColors);
+    });
+  };
+
 
   return (
     <div>
@@ -157,11 +209,12 @@ const App = () => {
         <div className="row">
           <div className="col-xs-offset-3 col-xs-6">
             <button type="button" onClick={() => start()}>Start</button>
-            <button type="button" onClick={() => callCheckNext()}>Test</button>
+            <button type="button" onClick={() => putNumberColor()}>Test</button>
             <h2>{mesage}</h2>
             <h2>{bombCount}</h2>
             <div className="game--grid">
               {fieldSquers.map((item) =>
+
                 <div key={item.id}>
                   <Squer
                     x={item.x}
@@ -172,6 +225,8 @@ const App = () => {
                     open={item.open}
                     bomb={item.bomb}
                     bombNumber={item.bombNumber}
+                    numberColor={item.color}
+
                   />
                 </div>)}
             </div>
