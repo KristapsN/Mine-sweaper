@@ -1,0 +1,34 @@
+
+$bacgroundColor: rgba(167, 167, 167, 0.623);
+$darkCell: #272932;
+$greenBoarder: #0F7173;
+$lightBackground: #E7ECEF;
+$bombRed: #F05D5E;
+$flagYelow: #D8A47F;
+.start {
+    padding: 10px 25px;
+    font-weight: bold;
+    background-color: $greenBoarder;
+    border-radius: 10px;
+    font-size: 18px;
+    border: 1px solid $lightBackground;
+    color: $lightBackground;
+    cursor: pointer;
+}
+.start:hover{
+    background-color: $greenBoarder;
+    opacity: 0.5;
+    transition: 0.5s;
+}
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: $bacgroundColor;
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}

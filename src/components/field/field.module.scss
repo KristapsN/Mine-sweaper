@@ -1,14 +1,27 @@
+$darkCell: #272932;
+$greenBoarder: #0F7173;
+$lightBackground: #E7ECEF;
+$bombRed: #F05D5E;
+$flagYelow: #D8A47F;
+
 .squer{
     position: absolute;  
     width: 10%;
     height: 10%;
-    background-color: grey;;
-    border: 3px solid rgb(255, 255, 255);
+    background-color: $darkCell;
+    border: 3px solid $greenBoarder;
+    outline-color: $flagYelow;
+    outline-width: 1px;
+    
     font-weight: bold;
+    
 }
 .squerOpen{
-    background-color: rgb(201, 201, 201);
+    background-color: $lightBackground;
 }
 .squerBomb{
-    background-color: rgb(206, 1, 1);
+    background-color: $bombRed;
+}
+.squerFlag{
+    background-color: $flagYelow;
 }

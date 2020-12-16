@@ -4,29 +4,106 @@ import './App.css';
 import 'flexboxgrid';
 import { v4 as uuidv4 } from 'uuid';
 import { Squer } from './components/field/squer';
+import { Start } from './components/buttons/start';
+import { Grid } from './helperFunctions/generateGrid';
+import { GenerateBombs } from './helperFunctions/generateBombs';
 
-const example = { id: '1', x: 0, y: 1, open: false, firstCircel: false, secondCircle: false, bomb: false, bombNumber: 0, color: 'red' };
-const bombPlaces: Array<Array<number>> = [[]];
+
+// const example = { id: '1', x: 0, y: 0, open: false, flag: false, bomb: false, bombNumber: 0, color: 'red' };
+
+type Cells = {
+  id: string
+  x: number
+  y: number
+  open: boolean
+  flag: boolean
+  bomb: boolean
+  bombNumber: number
+  color: string
+};
 
 const App = () => {
 
-  const [fieldSquers, setFieldSquers] = useState([
-    example
-  ]);
+  const [cells, setCells] = useState<Cells[]>([]);
+  const [bombPlaces, setBombPlaces] = useState<Array<Array<number>>>([[]]);
   const [mesage, setMesage] = useState('');
   const [bombCount, setBombCount] = useState(0);
+  const [flags, setFlags] = useState(false);
+  const [launchDraw, setLaunchDraw] = useState(false);
+  const [hideStart, setHideStart] = useState(false);
+
+  useEffect(() => {
+    draw();
+  }, [launchDraw]);
+
+  const size = 10;
+  const draw = () => {
+    setCells(Grid(size));
+  };
+
+  const start = () => {
+    putBombs();
+    putNumberColor();
+    setHideStart(!hideStart);
+    bombsRemaining();
+  };
+
+  const reStart = () => {
+    let clearField = [...cells];
+    clearField = [];
+    setCells(clearField);
+    setBombPlaces([[]]);
+    setLaunchDraw(!launchDraw);
+    setHideStart(!hideStart);
+  };
+
+  const flagHandler = () => {
+    setFlags(!flags);
+  };
+
+  const bombsRemaining = () => {
+    const bombLength = cells.filter(item => item.bomb === true);
+    const flagLength = cells.filter(item => item.flag === true);
+    setBombCount(bombLength.length - flagLength.length);
+  };
+
+  const openHandler = (x: number, y: number) => {
+    const opencells = [...cells];
+    opencells.map((item) => {
+      if (item.x === x && item.y === y && flags) {
+        item.flag = !item.flag;
+        item.open = false;
+      } else if (item.x === x && item.y === y) {
+        item.open = true;
+        if (item.bomb) {
+          youLose();
+        }
+        if (item.bombNumber === 0) {
+          checkIfZero(x, y);
+        }
+      }
+    });
+    setCells(opencells);
+    callCheckNext();
+    checkWin();
+    bombsRemaining();
+  };
 
   const checkWin = () => {
-    const winLength = fieldSquers.length - bombPlaces.length;
-    console.log('Test win');
-    const winField = fieldSquers.filter(item => item.open === true);
-    console.log('Now', winField.length, 'Should', winLength - 1);
+    const winLength = cells.length - size;
+    const winField = cells.filter(item => item.open === true);
     if (winField.length === winLength) {
       setMesage('You Win!');
+      const winOpenAll = [...cells];
+      winOpenAll.map((item) => {
+        item.open = true;
+        setCells(winOpenAll);
+      });
     }
   };
+
   const checkIfZero = (x: number, y: number) => {
-    const chekZeros = [...fieldSquers];
+    const chekZeros = [...cells];
     chekZeros.map((item) => {
       for (let i = -1; i < 2; i++) {
         for (let l = -1; l < 2; l++) {
@@ -40,138 +117,76 @@ const App = () => {
   };
 
   const checkNextOpenZeroStep = () => {
-    const chekNextZeros2 = [...fieldSquers];
-    const chekNextZeros = fieldSquers.filter(item => item.bombNumber === 0 && item.open === true);
-    fieldSquers.map((item2) => {
+    const chekNextZeros2 = [...cells];
+    const chekNextZeros = cells.filter(item => item.bombNumber ===
+      0 && item.open === true);
+    cells.map((item2) => {
       chekNextZeros.map((item3) => {
         for (let i = -1; i < 2; i++) {
           for (let l = -1; l < 2; l++) {
-            if (item2.x === item3.x + 10 * i && item2.y === item3.y + 10 * l && item2.bomb === false) {
+            if (item2.x === item3.x + 10 * i && item2.y ===
+              item3.y + 10 * l && item2.bomb === false) {
               item2.open = true;
-              setFieldSquers(chekNextZeros2);
+              setCells(chekNextZeros2);
             }
           }
         }
       });
     });
   };
-  const callCheckNext = () => {
-    for (let i = 0; i < 20; i++) {
-      checkNextOpenZeroStep();
-    }
-  };
-  const openHandler = (x: number, y: number) => {
-    const openFieldSquers = [...fieldSquers];
-    openFieldSquers.map((item) => {
-      if (item.x === x && item.y === y) {
 
-        item.open = true;
-        if (item.bomb) {
-          youLose();
-        }
-        if (item.bombNumber === 0) {
-          checkIfZero(x, y);
-        }
+  const callCheckNext = () => {
+    if (!flags) {
+      for (let i = 0; i < 20; i++) {
+        checkNextOpenZeroStep();
       }
-    });
-    setFieldSquers(openFieldSquers);
-    callCheckNext();
-    checkWin();
+    }
   };
 
   const youLose = () => {
     setMesage('You Loese');
-    const loseOpenAll = [...fieldSquers];
+    const loseOpenAll = [...cells];
     loseOpenAll.map((item) => {
       item.open = true;
-      setFieldSquers(loseOpenAll);
+      setCells(loseOpenAll);
     });
   };
 
-  const draw = () => {
-    const newFieldSquers = [...fieldSquers];
-    let generate = example;
-    for (let j = 0; j <= 9; j++) {
-      for (let i = 0; i <= 9; i++) {
-        const setId = uuidv4();
-        generate = {
-          id: setId, x: i * 10, y: j * 10, open: false, bomb: false,
-          firstCircel: false, secondCircle: false, bombNumber: 0, color: 'red'
-        };
-        newFieldSquers.push(generate);
-        setFieldSquers(newFieldSquers);
-      }
-    }
-  };
-
-  const bombCounter = () => {
-    const bombLength = fieldSquers.filter(item => item.bomb === true);
-    setBombCount(bombLength.length);
-    if (bombLength.length < 10) {
-      putBombs();
-    }
-  };
-
   const putBombs = () => {
-    const bombField = [...fieldSquers];
-    for (let i = 0; i < 1; i++) {
-      const num = Math.floor(Math.random() * 10);
-      const num2 = Math.floor(Math.random() * 10);
-
-
-      bombField.map((item) => {
-
-        console.log(num, num2);
-        if (item.x / 10 === num && item.y / 10 === num2) {
-          bombPlaces.push([item.x, item.y]);
+    const bombPlacement = GenerateBombs(size);
+    console.log(GenerateBombs(size));
+    const bombField = [...cells];
+    bombField.map((item) => {
+      for (let i = 0; i < bombPlacement.length; i++) {
+        if (item.x === bombPlacement[i][0] && item.y === bombPlacement[i][1]
+          && item.bomb === false) {
           item.bomb = true;
         }
-
-      });
-    }
-    setFieldSquers(bombField);
-
-    bombCounter();
-  };
-
-
-
-  const putBombNumbers = () => {
-    const bombNumberField = [...fieldSquers];
-    fieldSquers.map((item) => {
-      for (let j = 0; j < bombPlaces.length; j++) {
+      }
+    });
+    setCells(bombField);
+    const bombNumberField = [...cells];
+    cells.map((item) => {
+      for (let j = 0; j < bombPlacement.length; j++) {
         for (let i = -1; i < 2; i++) {
           for (let l = -1; l < 2; l++) {
-            if (item.x === bombPlaces[j][0] + 10 * i &&
-              item.y === bombPlaces[j][1] + -10 * l) {
+            if (item.x === bombPlacement[j][0] + 10 * i &&
+              item.y === bombPlacement[j][1] + -10 * l) {
               item.bombNumber += 1;
             }
           }
         }
       }
     });
-    setFieldSquers(bombNumberField);
-    console.log(bombNumberField);
+    setCells(bombNumberField);
   };
-
-  useEffect(() => {
-    draw();
-  }, []);
-
-  const start = () => {
-    putBombs();
-    putBombNumbers();
-    putNumberColor();
-
-  };
-
 
   const putNumberColor = () => {
-    const allNumberColors = [...fieldSquers]; 
-    fieldSquers.map((item) => {
+    const allNumberColors = [...cells];
+    cells.map((item) => {
       switch (item.bombNumber) {
         case 0:
-          item.color = 'rgb(201, 201, 201)';
+          item.color = 'rgb(201, 201, 201, 0)';
           break;
         case 1:
           item.color = 'rgb(0, 4, 212)';
@@ -198,23 +213,33 @@ const App = () => {
           item.color = 'rgb(0, 0, 0)';
           break;
       }
-      setFieldSquers(allNumberColors);
+      setCells(allNumberColors);
     });
   };
-
 
   return (
     <div>
       <div className="container">
         <div className="row">
-          <div className="col-xs-offset-3 col-xs-6">
-            <button type="button" onClick={() => start()}>Start</button>
-            <button type="button" onClick={() => putNumberColor()}>Test</button>
-            <h2>{mesage}</h2>
-            <h2>{bombCount}</h2>
-            <div className="game--grid">
-              {fieldSquers.map((item) =>
+          <div className="col-md-offset-3 col-md-6 col-xs-12">
 
+            <button type="button" onClick={() => flagHandler()}>Flag</button>
+            <button type="button" onClick={() => reStart()}>Test</button>
+            <h2>{mesage}</h2>
+
+
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-offset-3 col-md-6 col-xs-12">
+            <div className="countingLine"> <h2>0:00</h2><h2>{bombCount}</h2></div>
+            <div className="game--grid">
+              <Start
+                labelText='Start'
+                startHandler={() => start()}
+                hideStart={hideStart}
+              />
+              {cells.map((item) =>
                 <div key={item.id}>
                   <Squer
                     x={item.x}
@@ -226,7 +251,7 @@ const App = () => {
                     bomb={item.bomb}
                     bombNumber={item.bombNumber}
                     numberColor={item.color}
-
+                    flag={item.flag}
                   />
                 </div>)}
             </div>
