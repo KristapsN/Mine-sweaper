@@ -2,14 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import 'flexboxgrid';
-import { v4 as uuidv4 } from 'uuid';
 import { Squer } from './components/field/squer';
 import { Start } from './components/buttons/start';
 import { Grid } from './helperFunctions/generateGrid';
 import { GenerateBombs } from './helperFunctions/generateBombs';
+import { NumberColor } from './helperFunctions/generateNumberColor';
+import { TougleSlider } from './components/buttons/flagSlider';
+import { Restart } from './components/buttons/restar';
+import { Counter } from './components/buttons/counter';
+import { WinLose } from './components/popUpMesages/winLose';
+import { Select } from './components/inputFields/dropdown';
+import { Level } from './helperFunctions/generateLevel';
 
-
-// const example = { id: '1', x: 0, y: 0, open: false, flag: false, bomb: false, bombNumber: 0, color: 'red' };
 
 type Cells = {
   id: string
@@ -25,18 +29,47 @@ type Cells = {
 const App = () => {
 
   const [cells, setCells] = useState<Cells[]>([]);
-  const [bombPlaces, setBombPlaces] = useState<Array<Array<number>>>([[]]);
   const [mesage, setMesage] = useState('');
   const [bombCount, setBombCount] = useState(0);
   const [flags, setFlags] = useState(false);
   const [launchDraw, setLaunchDraw] = useState(false);
   const [hideStart, setHideStart] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [bombsInLevel, setBombsInLevel] = useState(10);
+
+  const size = 10;
+  // const bombs = 20;
+
+
+
+  const winLoseHandler = () => {
+    setOpenPopup(!openPopup);
+  };
+
+  useEffect(() => {
+    let interval = 0;
+    if (isActive) {
+      // @ts-ignore
+      interval = setTimeout(() => {
+        let count = seconds;
+        setSeconds(count += 1);
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearTimeout(interval);
+    }
+    return () => clearTimeout(interval);
+  }, [isActive, seconds]);
+
 
   useEffect(() => {
     draw();
+    setBombCount(0);
   }, [launchDraw]);
 
-  const size = 10;
+
   const draw = () => {
     setCells(Grid(size));
   };
@@ -46,15 +79,18 @@ const App = () => {
     putNumberColor();
     setHideStart(!hideStart);
     bombsRemaining();
+    setIsActive(true);
   };
 
   const reStart = () => {
     let clearField = [...cells];
     clearField = [];
     setCells(clearField);
-    setBombPlaces([[]]);
     setLaunchDraw(!launchDraw);
     setHideStart(!hideStart);
+    setMesage('');
+    setIsActive(false);
+    setSeconds(0);
   };
 
   const flagHandler = () => {
@@ -90,7 +126,7 @@ const App = () => {
   };
 
   const checkWin = () => {
-    const winLength = cells.length - size;
+    const winLength = cells.length - bombsInLevel;
     const winField = cells.filter(item => item.open === true);
     if (winField.length === winLength) {
       setMesage('You Win!');
@@ -98,8 +134,20 @@ const App = () => {
       winOpenAll.map((item) => {
         item.open = true;
         setCells(winOpenAll);
+        setIsActive(false);
+        setOpenPopup(!openPopup);
       });
     }
+  };
+  const youLose = () => {
+    setMesage('You Loese');
+    const loseOpenAll = [...cells];
+    loseOpenAll.map((item) => {
+      item.open = true;
+      setCells(loseOpenAll);
+      setIsActive(false);
+      setOpenPopup(!openPopup);
+    });
   };
 
   const checkIfZero = (x: number, y: number) => {
@@ -117,17 +165,17 @@ const App = () => {
   };
 
   const checkNextOpenZeroStep = () => {
-    const chekNextZeros2 = [...cells];
-    const chekNextZeros = cells.filter(item => item.bombNumber ===
+    const chekNextZerosCircle = [...cells];
+    const filterNextOpenZeros = cells.filter(item => item.bombNumber ===
       0 && item.open === true);
-    cells.map((item2) => {
-      chekNextZeros.map((item3) => {
+    cells.map((itemCells) => {
+      filterNextOpenZeros.map((itemZero) => {
         for (let i = -1; i < 2; i++) {
           for (let l = -1; l < 2; l++) {
-            if (item2.x === item3.x + 10 * i && item2.y ===
-              item3.y + 10 * l && item2.bomb === false) {
-              item2.open = true;
-              setCells(chekNextZeros2);
+            if (itemCells.x === itemZero.x + 10 * i && itemCells.y ===
+              itemZero.y + 10 * l && itemCells.bomb === false) {
+              itemCells.open = true;
+              setCells(chekNextZerosCircle);
             }
           }
         }
@@ -143,18 +191,11 @@ const App = () => {
     }
   };
 
-  const youLose = () => {
-    setMesage('You Loese');
-    const loseOpenAll = [...cells];
-    loseOpenAll.map((item) => {
-      item.open = true;
-      setCells(loseOpenAll);
-    });
-  };
+
 
   const putBombs = () => {
-    const bombPlacement = GenerateBombs(size);
-    console.log(GenerateBombs(size));
+    const bombPlacement = GenerateBombs(bombsInLevel);
+    console.log(GenerateBombs(bombsInLevel));
     const bombField = [...cells];
     bombField.map((item) => {
       for (let i = 0; i < bombPlacement.length; i++) {
@@ -184,37 +225,16 @@ const App = () => {
   const putNumberColor = () => {
     const allNumberColors = [...cells];
     cells.map((item) => {
-      switch (item.bombNumber) {
-        case 0:
-          item.color = 'rgb(201, 201, 201, 0)';
-          break;
-        case 1:
-          item.color = 'rgb(0, 4, 212)';
-          break;
-        case 2:
-          item.color = 'rgb(0, 177, 59)';
-          break;
-        case 3:
-          item.color = 'rgb(177, 130, 0)';
-          break;
-        case 4:
-          item.color = 'rgb(0, 142, 177)';
-          break;
-        case 5:
-          item.color = 'rgb(121, 0, 177)';
-          break;
-        case 6:
-          item.color = 'rgb(177, 0, 147)';
-          break;
-        case 7:
-          item.color = 'rgb(177, 0, 0)';
-          break;
-        case 8:
-          item.color = 'rgb(0, 0, 0)';
-          break;
-      }
+      item.color = NumberColor(item.bombNumber);
       setCells(allNumberColors);
     });
+  };
+
+  const sletctLevelHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(e.target.value);
+    console.log(e.target.value);
+    setBombsInLevel(Level(e.target.value));
+    console.log(Level(e.target.value));
   };
 
   return (
@@ -222,17 +242,44 @@ const App = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-offset-3 col-md-6 col-xs-12">
-
-            <button type="button" onClick={() => flagHandler()}>Flag</button>
-            <button type="button" onClick={() => reStart()}>Test</button>
-            <h2>{mesage}</h2>
-
-
+            <WinLose
+              openPopup={openPopup}
+              title={mesage}
+              paragraph='Play again?'
+              winLoseHandler={() => winLoseHandler()}
+              yourResult={seconds}
+            />
           </div>
         </div>
         <div className="row">
           <div className="col-md-offset-3 col-md-6 col-xs-12">
-            <div className="countingLine"> <h2>0:00</h2><h2>{bombCount}</h2></div>
+            <div className="top--menu margin--botom--20">
+              <Select
+                selectHandler={(e) => sletctLevelHandler(e)}
+                valueLevel={selectedOption}
+              />
+              <Restart
+                restartHandler={() => reStart()}
+              />
+            </div>
+            <div className="counter margin--botom--20">
+              <div className="counter--bombs">
+                <i className="fas fa-clock" />
+                <Counter
+                  countingValue={seconds}
+                />
+              </div>
+              <TougleSlider
+                flagSwitchHandler={() => flagHandler()}
+                checkedSwitch={flags}
+              />
+              <div className="counter--bombs">
+                <i className="fas fa-bomb" />
+                <Counter
+                  countingValue={bombCount}
+                />
+              </div>
+            </div>
             <div className="game--grid">
               <Start
                 labelText='Start'
@@ -259,6 +306,7 @@ const App = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

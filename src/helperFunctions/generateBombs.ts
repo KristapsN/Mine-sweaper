@@ -1,9 +1,9 @@
 
-export const GenerateBombs = (size: number) => {
+export const GenerateBombs = (bombs: number) => {
 
   const bombArray: number[][] = [];
  
-  while (bombArray.length < size) {
+  while (bombArray.length < bombs) {
     const num = Math.floor(Math.random() * 10);
     const num2 = Math.floor(Math.random() * 10);
    

@@ -1,10 +1,10 @@
-
 $bacgroundColor: rgba(167, 167, 167, 0.623);
 $darkCell: #272932;
-$greenBoarder: #0F7173;
-$lightBackground: #E7ECEF;
-$bombRed: #F05D5E;
-$flagYelow: #D8A47F;
+$greenBoarder: #0f7173;
+$lightBackground: #e7ecef;
+$bombRed: #f05d5e;
+$flagYelow: #d8a47f;
+
 .start {
     padding: 10px 25px;
     font-weight: bold;
@@ -15,7 +15,7 @@ $flagYelow: #D8A47F;
     color: $lightBackground;
     cursor: pointer;
 }
-.start:hover{
+.start:hover {
     background-color: $greenBoarder;
     opacity: 0.5;
     transition: 0.5s;
@@ -31,4 +31,25 @@ $flagYelow: #D8A47F;
     z-index: 1000;
     align-items: center;
     justify-content: center;
+}
+.restarButton{
+    color: $greenBoarder;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    outline: none;
+
+    &:hover{
+        transform: rotate(180deg);
+        transition: 0.5s;
+    }
+}
+.counterNumbers{
+    margin: 0 10px;
+    color: $darkCell;
+    padding: 5px 10px;
+    border: 2px solid $greenBoarder;
+    min-width: 70px;
+    text-align: center;
 }
