@@ -151,7 +151,7 @@ const App = () => {
       item.open = true;
       setCells(loseOpenAll);
       setIsActive(false);
-      // setOpenPopup(!openPopup);
+      setOpenPopup(!openPopup);
     });
   };
 
@@ -247,19 +247,16 @@ const App = () => {
       name: inputName,
       score: seconds
     });
-
     setInputName('');
-    setOpenPopup(false);
   };
 
   useEffect(() => {
     if (scoreBoard) {
       fullScore.push(scoreBoard);
       localStorage.score = JSON.stringify(fullScore);
+      setOpenPopup(false);
     }
   }, [scoreBoard]);
-
-
 
   return (
     <div>
@@ -280,6 +277,7 @@ const App = () => {
 
             />
             <div className="top--menu margin--botom--20">
+              <span>Level:</span>&nbsp;
               <Select
                 selectHandler={(e) => sletctLevelHandler(e)}
                 valueLevel={selectedOption}
