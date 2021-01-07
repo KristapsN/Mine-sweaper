@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Mine-sweaper/static/css/main.f633e9cd.chunk.css",
-    "main.js": "/Mine-sweaper/static/js/main.49ce3517.chunk.js",
-    "main.js.map": "/Mine-sweaper/static/js/main.49ce3517.chunk.js.map",
-    "runtime-main.js": "/Mine-sweaper/static/js/runtime-main.b24291af.js",
-    "runtime-main.js.map": "/Mine-sweaper/static/js/runtime-main.b24291af.js.map",
+    "main.css": "/Mine-sweaper/static/css/main.6d5ef42f.chunk.css",
+    "main.js": "/Mine-sweaper/static/js/main.425f1d38.chunk.js",
+    "main.js.map": "/Mine-sweaper/static/js/main.425f1d38.chunk.js.map",
+    "runtime-main.js": "/Mine-sweaper/static/js/runtime-main.49db4455.js",
+    "runtime-main.js.map": "/Mine-sweaper/static/js/runtime-main.49db4455.js.map",
     "static/css/2.e985627f.chunk.css": "/Mine-sweaper/static/css/2.e985627f.chunk.css",
-    "static/js/2.9aa317f9.chunk.js": "/Mine-sweaper/static/js/2.9aa317f9.chunk.js",
-    "static/js/2.9aa317f9.chunk.js.map": "/Mine-sweaper/static/js/2.9aa317f9.chunk.js.map",
-    "static/js/3.58db852d.chunk.js": "/Mine-sweaper/static/js/3.58db852d.chunk.js",
-    "static/js/3.58db852d.chunk.js.map": "/Mine-sweaper/static/js/3.58db852d.chunk.js.map",
+    "static/js/2.fc9f8540.chunk.js": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js",
+    "static/js/2.fc9f8540.chunk.js.map": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js.map",
+    "static/js/3.9ef056c6.chunk.js": "/Mine-sweaper/static/js/3.9ef056c6.chunk.js",
+    "static/js/3.9ef056c6.chunk.js.map": "/Mine-sweaper/static/js/3.9ef056c6.chunk.js.map",
     "index.html": "/Mine-sweaper/index.html",
     "static/css/2.e985627f.chunk.css.map": "/Mine-sweaper/static/css/2.e985627f.chunk.css.map",
-    "static/css/main.f633e9cd.chunk.css.map": "/Mine-sweaper/static/css/main.f633e9cd.chunk.css.map",
-    "static/js/2.9aa317f9.chunk.js.LICENSE.txt": "/Mine-sweaper/static/js/2.9aa317f9.chunk.js.LICENSE.txt"
+    "static/css/main.6d5ef42f.chunk.css.map": "/Mine-sweaper/static/css/main.6d5ef42f.chunk.css.map",
+    "static/js/2.fc9f8540.chunk.js.LICENSE.txt": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.b24291af.js",
+    "static/js/runtime-main.49db4455.js",
     "static/css/2.e985627f.chunk.css",
-    "static/js/2.9aa317f9.chunk.js",
-    "static/css/main.f633e9cd.chunk.css",
-    "static/js/main.49ce3517.chunk.js"
+    "static/js/2.fc9f8540.chunk.js",
+    "static/css/main.6d5ef42f.chunk.css",
+    "static/js/main.425f1d38.chunk.js"
   ]
 }
