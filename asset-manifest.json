@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/Mine-sweaper/static/css/main.6d5ef42f.chunk.css",
-    "main.js": "/Mine-sweaper/static/js/main.425f1d38.chunk.js",
-    "main.js.map": "/Mine-sweaper/static/js/main.425f1d38.chunk.js.map",
+    "main.js": "/Mine-sweaper/static/js/main.bf111ecc.chunk.js",
+    "main.js.map": "/Mine-sweaper/static/js/main.bf111ecc.chunk.js.map",
     "runtime-main.js": "/Mine-sweaper/static/js/runtime-main.49db4455.js",
     "runtime-main.js.map": "/Mine-sweaper/static/js/runtime-main.49db4455.js.map",
     "static/css/2.e985627f.chunk.css": "/Mine-sweaper/static/css/2.e985627f.chunk.css",
-    "static/js/2.fc9f8540.chunk.js": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js",
-    "static/js/2.fc9f8540.chunk.js.map": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js.map",
+    "static/js/2.795ceee4.chunk.js": "/Mine-sweaper/static/js/2.795ceee4.chunk.js",
+    "static/js/2.795ceee4.chunk.js.map": "/Mine-sweaper/static/js/2.795ceee4.chunk.js.map",
     "static/js/3.9ef056c6.chunk.js": "/Mine-sweaper/static/js/3.9ef056c6.chunk.js",
     "static/js/3.9ef056c6.chunk.js.map": "/Mine-sweaper/static/js/3.9ef056c6.chunk.js.map",
     "index.html": "/Mine-sweaper/index.html",
     "static/css/2.e985627f.chunk.css.map": "/Mine-sweaper/static/css/2.e985627f.chunk.css.map",
     "static/css/main.6d5ef42f.chunk.css.map": "/Mine-sweaper/static/css/main.6d5ef42f.chunk.css.map",
-    "static/js/2.fc9f8540.chunk.js.LICENSE.txt": "/Mine-sweaper/static/js/2.fc9f8540.chunk.js.LICENSE.txt"
+    "static/js/2.795ceee4.chunk.js.LICENSE.txt": "/Mine-sweaper/static/js/2.795ceee4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.49db4455.js",
     "static/css/2.e985627f.chunk.css",
-    "static/js/2.fc9f8540.chunk.js",
+    "static/js/2.795ceee4.chunk.js",
     "static/css/main.6d5ef42f.chunk.css",
-    "static/js/main.425f1d38.chunk.js"
+    "static/js/main.bf111ecc.chunk.js"
   ]
 }
