@@ -284,6 +284,7 @@ const App = () => {
               />
               <Restart
                 restartHandler={() => reStart()}
+                deactivate={hideStart}
               />
             </div>
             <div className="counter margin--botom--20">

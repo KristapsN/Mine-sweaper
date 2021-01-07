@@ -3,17 +3,28 @@ import style from './buttons.module.scss';
 
 type Props = {
   restartHandler: () => void;
+  deactivate: boolean;
 };
 
-export const Restart = ({ restartHandler }: Props) => {
-  
+export const Restart = ({ restartHandler, deactivate }: Props) => {
+
   return (
-    <button
-      type='button'
-      onClick={() => restartHandler()}
-      className={style.restarButton}
-    >
-      <i className="fas fa-sync" />
-    </button>
+    <>
+      {deactivate ?
+        <button
+          type='button'
+          onClick={() => restartHandler()}
+          className={style.restarButton}
+        >
+          <i className="fas fa-sync" />
+        </button> :
+        <button
+          type='button'
+          disabled
+          className={style.restarButton}
+        >
+          <i className="fas fa-sync" />
+        </button>}
+    </>
   );
 };

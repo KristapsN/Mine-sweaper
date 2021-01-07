@@ -7,14 +7,14 @@ type Props = {
   score: number;
 };
 
-export const Score = ({place, name, score}: Props) => {
+export const Score = ({ place, name, score }: Props) => {
 
   return (
     <div className={style.socoreLine}>
-     
-      <span>{place+1}. </span>
+
+      <span>{place + 1}. </span>
       <span>{name} </span>
-      <span>{score}s </span>
+      <span>: {score}s </span>
     </div>
   );
 };

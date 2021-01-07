@@ -17,7 +17,6 @@ export const Select = ({ valueLevel, selectHandler }: Props) => {
         onChange={(e) => selectHandler(e)}
         value={valueLevel}
       >
-        <option value="Chose">Chose</option>
         <option value="Easy">Easy</option>
         <option value="Medium">Medium</option>
         <option value="Hard">Hard</option>

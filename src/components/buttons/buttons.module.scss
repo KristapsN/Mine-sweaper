@@ -45,6 +45,10 @@ $flagYelow: #d8a47f;
         transform: rotate(180deg);
         transition: 0.5s;
     }
+    &:disabled{
+        background-color: transparent;
+        border: none;
+    }
 }
 .counterNumbers{
     margin: 0 10px;
