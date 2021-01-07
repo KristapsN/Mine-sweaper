@@ -13,7 +13,7 @@ import { Counter } from './components/buttons/counter';
 import { WinLose } from './components/popUpMesages/winLose';
 import { Select } from './components/inputFields/dropdown';
 import { Level } from './helperFunctions/generateLevel';
-
+import { Score } from './components/field/score';
 
 type Cells = {
   id: string
@@ -25,9 +25,15 @@ type Cells = {
   bombNumber: number
   color: string
 };
+type ScoreArr = {
+  place: number
+  name: string
+  score: number
+};
 
 const App = () => {
 
+  const fullScore: ScoreArr[] = localStorage.score ? JSON.parse(localStorage.score) : [];
   const [cells, setCells] = useState<Cells[]>([]);
   const [mesage, setMesage] = useState('');
   const [bombCount, setBombCount] = useState(0);
@@ -39,11 +45,12 @@ const App = () => {
   const [isActive, setIsActive] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const [bombsInLevel, setBombsInLevel] = useState(10);
+  const [inputName, setInputName] = useState('');
+  const [scoreBoard, setScoreBoard] = useState<ScoreArr>();
+
+  localStorage.score = JSON.stringify(fullScore);
 
   const size = 10;
-  // const bombs = 20;
-
-
 
   const winLoseHandler = () => {
     setOpenPopup(!openPopup);
@@ -63,12 +70,10 @@ const App = () => {
     return () => clearTimeout(interval);
   }, [isActive, seconds]);
 
-
   useEffect(() => {
     draw();
     setBombCount(0);
   }, [launchDraw]);
-
 
   const draw = () => {
     setCells(Grid(size));
@@ -146,7 +151,7 @@ const App = () => {
       item.open = true;
       setCells(loseOpenAll);
       setIsActive(false);
-      setOpenPopup(!openPopup);
+      // setOpenPopup(!openPopup);
     });
   };
 
@@ -191,8 +196,6 @@ const App = () => {
     }
   };
 
-
-
   const putBombs = () => {
     const bombPlacement = GenerateBombs(bombsInLevel);
     console.log(GenerateBombs(bombsInLevel));
@@ -232,27 +235,50 @@ const App = () => {
 
   const sletctLevelHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(e.target.value);
-    console.log(e.target.value);
     setBombsInLevel(Level(e.target.value));
-    console.log(Level(e.target.value));
   };
+
+  const inputNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputName(e.target.value);
+  };
+  const submittHandler = () => {
+    setScoreBoard({
+      place: 1,
+      name: inputName,
+      score: seconds
+    });
+
+    setInputName('');
+    setOpenPopup(false);
+  };
+
+  useEffect(() => {
+    if (scoreBoard) {
+      fullScore.push(scoreBoard);
+      localStorage.score = JSON.stringify(fullScore);
+    }
+  }, [scoreBoard]);
+
+
 
   return (
     <div>
       <div className="container">
         <div className="row">
-          <div className="col-md-offset-3 col-md-6 col-xs-12">
+          <div className="col-md-offset-2 col-md-8 col-xs-12">
             <WinLose
               openPopup={openPopup}
               title={mesage}
-              paragraph='Play again?'
+              paragraph='Your name:'
               winLoseHandler={() => winLoseHandler()}
               yourResult={seconds}
+              inputHandler={(e) => inputNameHandler(e)}
+              inputValue={inputName}
+              submitValue='Submit'
+              submittHandler={() => submittHandler()}
+              lose={mesage}
+
             />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-offset-3 col-md-6 col-xs-12">
             <div className="top--menu margin--botom--20">
               <Select
                 selectHandler={(e) => sletctLevelHandler(e)}
@@ -280,33 +306,52 @@ const App = () => {
                 />
               </div>
             </div>
-            <div className="game--grid">
-              <Start
-                labelText='Start'
-                startHandler={() => start()}
-                hideStart={hideStart}
-              />
-              {cells.map((item) =>
-                <div key={item.id}>
-                  <Squer
-                    x={item.x}
-                    y={item.y}
-                    id={item.id}
-                    openHandler={(x, y) =>
-                      openHandler(item.x, item.y)}
-                    open={item.open}
-                    bomb={item.bomb}
-                    bombNumber={item.bombNumber}
-                    numberColor={item.color}
-                    flag={item.flag}
-                  />
-                </div>)}
+            <div className="row">
+              <div className="col-md-8 col-xs-12">
+                <div className="game--grid--score">
+                  <div className="game--grid margin--botom--20">
+                    <Start
+                      labelText='Start'
+                      startHandler={() => start()}
+                      hideStart={hideStart}
+                    />
+                    {cells.map((item) =>
+                      <div key={item.id}>
+                        <Squer
+                          x={item.x}
+                          y={item.y}
+                          id={item.id}
+                          openHandler={(x, y) =>
+                            openHandler(item.x, item.y)}
+                          open={item.open}
+                          bomb={item.bomb}
+                          bombNumber={item.bombNumber}
+                          numberColor={item.color}
+                          flag={item.flag}
+                        />
+                      </div>)}
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4 col-xs-12">
+                <div className="game--score">
+                  <h1>Your scores</h1>
+                  {fullScore.map(({ name, score }, index) =>
+                    <>
+                      <Score
+                        place={index}
+                        name={name}
+                        score={score}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 

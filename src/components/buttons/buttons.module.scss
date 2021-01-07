@@ -39,6 +39,7 @@ $flagYelow: #d8a47f;
     cursor: pointer;
     font-size: 18px;
     outline: none;
+    padding: 0 20px;
 
     &:hover{
         transform: rotate(180deg);
@@ -52,4 +53,16 @@ $flagYelow: #d8a47f;
     border: 2px solid $greenBoarder;
     min-width: 70px;
     text-align: center;
+}
+.submitButton{
+    border: 2px solid $greenBoarder;
+    background-color: $bacgroundColor;
+    color: $greenBoarder;
+    padding: 10px 15px;
+    margin: 10px;
+    
+    &:hover{
+        opacity: 0.7;
+        transition: 0.5s;
+    }
 }

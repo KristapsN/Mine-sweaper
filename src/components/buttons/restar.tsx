@@ -1,4 +1,3 @@
-import { type } from 'os';
 import React from 'react';
 import style from './buttons.module.scss';
 
@@ -7,9 +6,8 @@ type Props = {
 };
 
 export const Restart = ({ restartHandler }: Props) => {
-
+  
   return (
-
     <button
       type='button'
       onClick={() => restartHandler()}

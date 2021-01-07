@@ -1,4 +1,5 @@
 import React from 'react';
+import style from './input.module.scss';
 
 type Props = {
   valueLevel: string
@@ -10,6 +11,7 @@ export const Select = ({ valueLevel, selectHandler }: Props) => {
   return (
     <div>
       <select
+        className={style.dropdown}
         name="expr"
         id="expr"
         onChange={(e) => selectHandler(e)}

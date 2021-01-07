@@ -1,16 +1,19 @@
 $darkCellTransparent: #2729326c;
-$greenBoarder: #0F7173;
-$lightBackground: #E7ECEF;
-$bombRed: #F05D5E;
-$flagYelow: #D8A47F;
+$greenBoarder: #0f7173;
+$lightBackground: #e7ecef;
+$bombRed: #f05d5e;
+$flagYelow: #d8a47f;
 
-.innerWrapper{
-    position: absolute;
+.innerWrapper {
+    position: relative;
     padding: 20px;
     background-color: $lightBackground;
-    border: 4px solid $greenBoarder; 
+    border: 4px solid $greenBoarder;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.outerWrapper{
+.outerWrapper {
     position: absolute;
     top: 0;
     right: 0;
@@ -21,4 +24,20 @@ $flagYelow: #D8A47F;
     align-items: center;
     justify-content: center;
     z-index: 10000;
+}
+.closeButton {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: $lightBackground;
+    border: 2px solid $greenBoarder;
+    border-radius: 50px;
+    cursor: pointer;
+
+    &:hover{
+        color: $lightBackground;
+        background-color: $greenBoarder;
+        transition: 0.4s;
+    }
+
 }

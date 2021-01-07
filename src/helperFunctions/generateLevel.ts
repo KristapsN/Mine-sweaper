@@ -5,19 +5,11 @@ export const Level = (selectedOptio: string) => {
       bombCount = 10;
       break;
     case 'Medium':
-      bombCount = 20;
+      bombCount = 15;
       break;
     case 'Hard':
-      bombCount = 30;
+      bombCount = 20;
       break;
   }
-
-  // if (selectedOptio === 'Easy'){
-  //   bombCount = 10;
-  // } else if (selectedOptio === 'Medium'){
-  //   bombCount = 20;
-  // } else if (selectedOptio === 'Hard'){
-  //   bombCount = 30;
-  // }
   return bombCount;
 };

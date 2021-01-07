@@ -16,7 +16,7 @@ export const TougleSlider = ({ flagSwitchHandler, checkedSwitch }: Props) => {
       <label className="switch">
         <input
           type="checkbox"
-          onClick={() => flagSwitchHandler()}
+          onChange={() => flagSwitchHandler()}
           checked={checkedSwitch}
         />
         <span className="slider round"></span>
